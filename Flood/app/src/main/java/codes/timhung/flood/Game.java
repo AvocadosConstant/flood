@@ -5,10 +5,13 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+
+import java.util.LinkedList;
 
 public class Game {
 
@@ -75,8 +78,7 @@ public class Game {
         if (state == GameState.RUNNING) {
             int x = calcGridIndex(screen.width(), gridWidth, event.getX());
             int y = calcGridIndex(screen.height(), gridHeight, event.getY());
-            Log.d("ONTOUCHEVENT", "Touched screen at " + event.getX() + ", " + event.getY());
-            Log.d("ONTOUCHEVENT", "= grid[" + x + "][" + y + "]");
+            Log.d("ONTOUCHEVENT", "grid[" + x + "][" + y + "]");
             floodGrid(brushColor, x, y);
         } else if(state == GameState.START) {
             state = GameState.RUNNING;
@@ -88,7 +90,6 @@ public class Game {
 
     public static int calcGridIndex(int screenDim, int gridDim, float touchLoc) {
         float f = touchLoc / screenDim;
-        Log.d("CALCGRIDINDEX", "Ratio is " + f);
         return (int)(gridDim * f);
     }
 
@@ -96,9 +97,27 @@ public class Game {
         if(x < 0 || x >= gridWidth || y < 0 || y >= gridHeight) return;
         if(grid[x][y] != color) {
             moves++;
-            grid[x][y] = color;
-        }
+            CellColor originalColor = grid[x][y];
+            //grid[x][y] = color;
 
+            // Floodfill algorithm
+            LinkedList<Point> queue = new LinkedList<>();
+            queue.push(new Point(x, y));
+
+            while(!queue.isEmpty()) {
+                Point cur = queue.pop();
+                if(cur.x >= 0 && cur.x < gridWidth
+                    && cur.y >= 0 && cur.y < gridHeight
+                    && grid[cur.x][cur.y] == originalColor) {
+                    // Need to color this cell and push its neighbors
+                    grid[cur.x][cur.y] = color;
+                    queue.push(new Point(cur.x - 1, cur.y));
+                    queue.push(new Point(cur.x, cur.y - 1));
+                    queue.push(new Point(cur.x + 1, cur.y));
+                    queue.push(new Point(cur.x, cur.y + 1));
+                }
+            }
+        }
         Log.d("floodGrid", "Moves: " + moves);
     }
 
