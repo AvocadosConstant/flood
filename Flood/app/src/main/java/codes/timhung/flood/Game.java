@@ -23,12 +23,25 @@ public class Game {
         START, RUNNING, END
     }
 
+    private enum CellColor {
+        GREEN, BLUE, PURPLE
+    }
     private Context context;
     private SurfaceHolder holder;
     private Rect screen;
     private Resources resources;
     private GameState state = GameState.START;
     private BitmapFactory.Options options;
+
+    private Paint greenPaint;
+    private Paint bluePaint;
+    private Paint purplePaint;
+
+    private int gridWidth = 12;
+    private int gridHeight = 12;
+    private int cellWidth;
+    private int cellHeight;
+    private CellColor grid[][];
 
     public Game(Context context, Rect screen, SurfaceHolder holder, Resources resources) {
         this.context = context;
@@ -40,7 +53,23 @@ public class Game {
     }
 
     public void restartGame() {
-        // TODO
+        Log.d("RESTARTGAME", "Restarting!");
+        cellWidth = screen.width() / gridWidth;
+        cellHeight = screen.height() / gridHeight;
+
+        grid = new CellColor[gridWidth][gridHeight];
+        for(int j = 0; j < grid[0].length; j++) {
+            for(int i = 0; i < grid.length; i++) {
+                grid[i][j] = CellColor.values()[(int)(Math.random()*CellColor.values().length)];
+            }
+        }
+
+        greenPaint = new Paint();
+        greenPaint.setColor(Color.GREEN);
+        bluePaint = new Paint();
+        bluePaint.setColor(Color.BLUE);
+        purplePaint = new Paint();
+        purplePaint.setColor(Color.MAGENTA);
     }
 
     public void onTouchEvent(MotionEvent event) {
@@ -50,7 +79,7 @@ public class Game {
         } else if(state == GameState.START) {
             state = GameState.RUNNING;
         } else if(state == GameState.END) {
-            restartGame();
+            //restartGame();
             state = GameState.RUNNING;
         }
     }
@@ -73,6 +102,7 @@ public class Game {
             switch (state) {
                 case RUNNING:
                     canvas.drawColor(Color.LTGRAY);
+                    drawGame(canvas);
                     break;
                 case END:
                     canvas.drawColor(Color.DKGRAY);
@@ -80,7 +110,6 @@ public class Game {
                     canvas.drawColor(Color.BLACK);
                     break;
             }
-            drawGame(canvas);
             holder.unlockCanvasAndPost(canvas);
         }
     }
@@ -90,6 +119,21 @@ public class Game {
      * @param canvas Canvas to be drawn on
      */
     private void drawGame(Canvas canvas) {
-        // TODO
+
+        screen.width();
+
+        for(int j = 0; j < grid[0].length; j++) {
+            for(int i = 0; i < grid.length; i++) {
+                canvas.drawRect(
+                    i * cellWidth,
+                    j * cellHeight,
+                    i * cellWidth + cellWidth,
+                    j * cellHeight + cellHeight,
+                    (grid[i][j] == CellColor.GREEN) ? greenPaint
+                        : (grid[i][j] == CellColor.BLUE) ? bluePaint : purplePaint
+                );
+                //grid[i][j] = CellColor.values()[(int)(Math.random()*CellColor.values().length)];
+            }
+        }
     }
 }
