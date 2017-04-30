@@ -2,8 +2,6 @@ package codes.timhung.flood;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,11 +9,6 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Random;
 
 public class Game {
 
@@ -31,7 +24,6 @@ public class Game {
     private Rect screen;
     private Resources resources;
     private GameState state = GameState.START;
-    private BitmapFactory.Options options;
 
     private Paint greenPaint;
     private Paint bluePaint;
@@ -42,6 +34,9 @@ public class Game {
     private int cellWidth;
     private int cellHeight;
     private CellColor grid[][];
+    private CellColor brushColor;
+
+    private int moves;
 
     public Game(Context context, Rect screen, SurfaceHolder holder, Resources resources) {
         this.context = context;
@@ -70,18 +65,41 @@ public class Game {
         bluePaint.setColor(Color.BLUE);
         purplePaint = new Paint();
         purplePaint.setColor(Color.MAGENTA);
+
+        brushColor = CellColor.GREEN;
+
+        moves = 0;
     }
 
     public void onTouchEvent(MotionEvent event) {
-        int eventAction = event.getAction();
-
         if (state == GameState.RUNNING) {
+            int x = calcGridIndex(screen.width(), gridWidth, event.getX());
+            int y = calcGridIndex(screen.height(), gridHeight, event.getY());
+            Log.d("ONTOUCHEVENT", "Touched screen at " + event.getX() + ", " + event.getY());
+            Log.d("ONTOUCHEVENT", "= grid[" + x + "][" + y + "]");
+            floodGrid(brushColor, x, y);
         } else if(state == GameState.START) {
             state = GameState.RUNNING;
         } else if(state == GameState.END) {
             //restartGame();
             state = GameState.RUNNING;
         }
+    }
+
+    public static int calcGridIndex(int screenDim, int gridDim, float touchLoc) {
+        float f = touchLoc / screenDim;
+        Log.d("CALCGRIDINDEX", "Ratio is " + f);
+        return (int)(gridDim * f);
+    }
+
+    public void floodGrid(CellColor color, int x, int y) {
+        if(x < 0 || x >= gridWidth || y < 0 || y >= gridHeight) return;
+        if(grid[x][y] != color) {
+            moves++;
+            grid[x][y] = color;
+        }
+
+        Log.d("floodGrid", "Moves: " + moves);
     }
 
     /**
