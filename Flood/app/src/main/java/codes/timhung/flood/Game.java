@@ -80,10 +80,11 @@ public class Game {
             int y = calcGridIndex(screen.height(), gridHeight, event.getY());
             Log.d("ONTOUCHEVENT", "grid[" + x + "][" + y + "]");
             floodGrid(brushColor, x, y);
+            checkWin();
         } else if(state == GameState.START) {
             state = GameState.RUNNING;
         } else if(state == GameState.END) {
-            //restartGame();
+            restartGame();
             state = GameState.RUNNING;
         }
     }
@@ -98,7 +99,6 @@ public class Game {
         if(grid[x][y] != color) {
             moves++;
             CellColor originalColor = grid[x][y];
-            //grid[x][y] = color;
 
             // Floodfill algorithm
             LinkedList<Point> queue = new LinkedList<>();
@@ -119,6 +119,18 @@ public class Game {
             }
         }
         Log.d("floodGrid", "Moves: " + moves);
+    }
+
+    public void checkWin() {
+        CellColor color = grid[0][0];
+        for(int j = 0; j < grid[0].length; j++) {
+            for (int i = 0; i < grid.length; i++) {
+                if(grid[i][j] != color) return;
+            }
+        }
+
+        // Won game!
+        state = GameState.END;
     }
 
     /**
