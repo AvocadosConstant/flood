@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 public class GameActivity extends ActionBarActivity {
@@ -13,6 +14,16 @@ public class GameActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        handleButtons();
+    }
+
+    public void updateMoves(int moves) {
+        TextView movesText = (TextView)findViewById(R.id.scoreText);
+
+        movesText.setText("MOVES: " + moves);
+    }
+
+    public void handleButtons() {
         final GameView gameView = (GameView)findViewById(R.id.gameView);
 
         final ToggleButton buttonGreen = (ToggleButton)findViewById(R.id.buttonGreen);
@@ -54,5 +65,6 @@ public class GameActivity extends ActionBarActivity {
                 } else buttonPurple.setChecked(true);
             }
         });
+
     }
 }

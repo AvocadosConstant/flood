@@ -12,13 +12,26 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="FLOOD"
-            android:capitalize="characters"
+            android:id="@+id/scoreText"
+            android:text="MOVES: "
             android:textColor="@android:color/holo_blue_dark"
             android:textColorHighlight="@android:color/primary_text_dark"
             android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:textSize="50dp"/>
+            android:textSize="50sp"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/highScoreText"
+            android:text="HIGH SCORE: "
+            android:textColor="@android:color/holo_blue_dark"
+            android:textColorHighlight="@android:color/primary_text_dark"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/scoreText"
+            android:textSize="30sp"/>
 
 
         <LinearLayout

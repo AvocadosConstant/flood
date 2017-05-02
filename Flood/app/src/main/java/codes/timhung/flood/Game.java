@@ -122,6 +122,8 @@ public class Game {
                 }
             }
         }
+        ((GameActivity)context).updateMoves(moves);
+
         Log.d("floodGrid", "Moves: " + moves);
     }
 
