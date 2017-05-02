@@ -19,9 +19,6 @@ public class Game {
         START, RUNNING, END
     }
 
-    private enum CellColor {
-        GREEN, BLUE, PURPLE
-    }
     private Context context;
     private SurfaceHolder holder;
     private Rect screen;
@@ -87,6 +84,10 @@ public class Game {
             restartGame();
             state = GameState.RUNNING;
         }
+    }
+
+    public void setColor(CellColor color) {
+        brushColor = color;
     }
 
     public static int calcGridIndex(int screenDim, int gridDim, float touchLoc) {

@@ -34,28 +34,38 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1" />
-            <Button
+            <ToggleButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/buttonGreen"
+                android:focusable="true"
+                android:textOn="GREEN"
+                android:textOff="GREEN"
                 android:background="@drawable/color_button"/>
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1" />
-            <Button
+            <ToggleButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/color_button"
-                android:gravity="center_vertical|center_horizontal" />
+                android:id="@+id/buttonBlue"
+                android:focusable="true"
+                android:textOn="BLUE"
+                android:textOff="BLUE"
+                android:background="@drawable/color_button"/>
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1" />
-            <Button
+            <ToggleButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/color_button"
-                android:gravity="center_vertical|center_horizontal" />
+                android:id="@+id/buttonPurple"
+                android:focusable="true"
+                android:textOn="PURPLE"
+                android:textOff="PURPLE"
+                android:background="@drawable/color_button"/>
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
