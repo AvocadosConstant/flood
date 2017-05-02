@@ -9,26 +9,46 @@ import android.widget.ToggleButton;
 
 public class GameActivity extends ActionBarActivity {
 
+    GameView gameView;
+    ToggleButton buttonGreen;
+    ToggleButton buttonBlue;
+    ToggleButton buttonPurple;
+    TextView movesText;
+    TextView scoreText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        gameView = (GameView)findViewById(R.id.gameView);
+
+        buttonGreen = (ToggleButton)findViewById(R.id.buttonGreen);
+        buttonBlue = (ToggleButton)findViewById(R.id.buttonBlue);
+        buttonPurple = (ToggleButton)findViewById(R.id.buttonPurple);
+
+        movesText = (TextView)findViewById(R.id.scoreText);
+        scoreText = (TextView)findViewById(R.id.highScoreText);
+
         handleButtons();
     }
 
-    public void updateMoves(int moves) {
-        TextView movesText = (TextView)findViewById(R.id.scoreText);
+    public void restartGame() {
+        updateMoves(0);
+        buttonGreen.setChecked(false);
+        buttonBlue.setChecked(false);
+        buttonPurple.setChecked(false);
+    }
 
+    public void updateMoves(int moves) {
         movesText.setText("MOVES: " + moves);
     }
 
-    public void handleButtons() {
-        final GameView gameView = (GameView)findViewById(R.id.gameView);
+    public void updateHighScore(int moves) {
+        scoreText.setText("HIGH SCORE: " + moves);
+    }
 
-        final ToggleButton buttonGreen = (ToggleButton)findViewById(R.id.buttonGreen);
-        final ToggleButton buttonBlue = (ToggleButton)findViewById(R.id.buttonBlue);
-        final ToggleButton buttonPurple = (ToggleButton)findViewById(R.id.buttonPurple);
+    public void handleButtons() {
 
         buttonGreen.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -38,6 +38,7 @@ public class Game {
     private CellColor brushColor;
 
     private int moves;
+    private int highScore;
 
     public Game(Context context, Rect screen, SurfaceHolder holder, Resources resources) {
         this.context = context;
@@ -45,6 +46,7 @@ public class Game {
         this.holder = holder;
         this.resources = resources;
 
+        highScore = Integer.MAX_VALUE;
         restartGame();
     }
 
@@ -72,6 +74,8 @@ public class Game {
         brushColor = CellColor.BLANK;
 
         moves = 0;
+
+        ((GameActivity)context).restartGame();
     }
 
     public void onTouchEvent(MotionEvent event) {
@@ -136,6 +140,10 @@ public class Game {
         }
 
         // Won game!
+        if(moves < highScore) {
+            highScore = moves;
+            ((GameActivity)context).updateHighScore(highScore);
+        }
         state = GameState.END;
     }
 
