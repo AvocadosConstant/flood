@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buttonsLayout"
-            android:layout_above="@+id/gameFrame"
+            android:layout_alignParentBottom="true"
             android:gravity="center"
             android:padding="10dp"
             android:background="#222222">
@@ -39,9 +39,9 @@
                 android:layout_height="50dp"
                 android:id="@+id/buttonGreen"
                 android:focusable="true"
-                android:textOn="GREEN"
-                android:textOff="GREEN"
-                android:background="@drawable/color_button"/>
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/button_green"/>
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
@@ -51,9 +51,9 @@
                 android:layout_height="50dp"
                 android:id="@+id/buttonBlue"
                 android:focusable="true"
-                android:textOn="BLUE"
-                android:textOff="BLUE"
-                android:background="@drawable/color_button"/>
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/button_blue"/>
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
@@ -63,9 +63,9 @@
                 android:layout_height="50dp"
                 android:id="@+id/buttonPurple"
                 android:focusable="true"
-                android:textOn="PURPLE"
-                android:textOff="PURPLE"
-                android:background="@drawable/color_button"/>
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/button_purple"/>
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
@@ -76,7 +76,7 @@
             android:id="@+id/gameFrame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_above="@+id/buttonsLayout">
 
             <codes.timhung.flood.GameView
                 android:id="@+id/gameView"

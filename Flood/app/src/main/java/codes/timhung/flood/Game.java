@@ -28,9 +28,10 @@ public class Game {
     private Paint greenPaint;
     private Paint bluePaint;
     private Paint purplePaint;
+    private Paint blankPaint;
 
-    private int gridWidth = 12;
-    private int gridHeight = 12;
+    private int gridWidth = 24;
+    private int gridHeight = 24;
     private int cellWidth;
     private int cellHeight;
     private CellColor grid[][];
@@ -55,18 +56,20 @@ public class Game {
         grid = new CellColor[gridWidth][gridHeight];
         for(int j = 0; j < grid[0].length; j++) {
             for(int i = 0; i < grid.length; i++) {
-                grid[i][j] = CellColor.values()[(int)(Math.random()*CellColor.values().length)];
+                grid[i][j] = CellColor.values()[(int)(Math.random() * (CellColor.values().length) - 1)];
             }
         }
 
         greenPaint = new Paint();
-        greenPaint.setColor(Color.GREEN);
+        greenPaint.setColor(resources.getColor(R.color.cellGreen));
         bluePaint = new Paint();
-        bluePaint.setColor(Color.BLUE);
+        bluePaint.setColor(resources.getColor(R.color.cellBlue));
         purplePaint = new Paint();
-        purplePaint.setColor(Color.MAGENTA);
+        purplePaint.setColor(resources.getColor(R.color.cellPurple));
+        blankPaint = new Paint();
+        blankPaint.setColor(resources.getColor(R.color.colorButtonBorder));
 
-        brushColor = CellColor.GREEN;
+        brushColor = CellColor.BLANK;
 
         moves = 0;
     }
@@ -96,7 +99,7 @@ public class Game {
     }
 
     public void floodGrid(CellColor color, int x, int y) {
-        if(x < 0 || x >= gridWidth || y < 0 || y >= gridHeight) return;
+        if(color == CellColor.BLANK || x < 0 || x >= gridWidth || y < 0 || y >= gridHeight) return;
         if(grid[x][y] != color) {
             moves++;
             CellColor originalColor = grid[x][y];
@@ -169,9 +172,6 @@ public class Game {
      * @param canvas Canvas to be drawn on
      */
     private void drawGame(Canvas canvas) {
-
-        screen.width();
-
         for(int j = 0; j < grid[0].length; j++) {
             for(int i = 0; i < grid.length; i++) {
                 canvas.drawRect(
@@ -180,9 +180,10 @@ public class Game {
                     i * cellWidth + cellWidth,
                     j * cellHeight + cellHeight,
                     (grid[i][j] == CellColor.GREEN) ? greenPaint
-                        : (grid[i][j] == CellColor.BLUE) ? bluePaint : purplePaint
+                        : (grid[i][j] == CellColor.BLUE) ? bluePaint
+                        : (grid[i][j] == CellColor.PURPLE) ? purplePaint
+                        : blankPaint
                 );
-                //grid[i][j] = CellColor.values()[(int)(Math.random()*CellColor.values().length)];
             }
         }
     }
