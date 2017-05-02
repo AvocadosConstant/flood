@@ -1,43 +1,45 @@
 package codes.timhung.flood;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class GameActivity extends ActionBarActivity {
+public class GameActivity extends Activity {
 
     GameView gameView;
-    ToggleButton buttonGreen;
-    ToggleButton buttonBlue;
-    ToggleButton buttonPurple;
     TextView movesText;
     TextView scoreText;
+
+    ColorButton colorButtons[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        findViews();
+        handleButtons();
+    }
+
+    public void findViews() {
         gameView = (GameView)findViewById(R.id.gameView);
-
-        buttonGreen = (ToggleButton)findViewById(R.id.buttonGreen);
-        buttonBlue = (ToggleButton)findViewById(R.id.buttonBlue);
-        buttonPurple = (ToggleButton)findViewById(R.id.buttonPurple);
-
         movesText = (TextView)findViewById(R.id.scoreText);
         scoreText = (TextView)findViewById(R.id.highScoreText);
 
-        handleButtons();
+        colorButtons = new ColorButton[] {
+                new ColorButton((ToggleButton)findViewById(R.id.buttonGreen), CellColor.GREEN),
+                new ColorButton((ToggleButton)findViewById(R.id.buttonBlue), CellColor.BLUE),
+                new ColorButton((ToggleButton)findViewById(R.id.buttonPurple), CellColor.PURPLE)
+        };
     }
 
     public void restartGame() {
         updateMoves(0);
-        buttonGreen.setChecked(false);
-        buttonBlue.setChecked(false);
-        buttonPurple.setChecked(false);
+        for(final ColorButton btn : colorButtons) {
+            btn.setChecked(false);
+        }
     }
 
     public void updateMoves(int moves) {
@@ -49,42 +51,21 @@ public class GameActivity extends ActionBarActivity {
     }
 
     public void handleButtons() {
+        for(final ColorButton btn : colorButtons) {
+            btn.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(btn.isChecked()) {
+                        gameView.game.setColor(btn.cellColor);
 
-        buttonGreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(buttonGreen.isChecked()) {
-                    gameView.game.setColor(CellColor.GREEN);
-
-                    buttonBlue.setChecked(false);
-                    buttonPurple.setChecked(false);
-                } else buttonGreen.setChecked(true);
-            }
-        });
-
-        buttonBlue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(buttonBlue.isChecked()) {
-                    gameView.game.setColor(CellColor.BLUE);
-
-                    buttonGreen.setChecked(false);
-                    buttonPurple.setChecked(false);
-                } else buttonBlue.setChecked(true);
-            }
-        });
-
-        buttonPurple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(buttonPurple.isChecked()) {
-                    gameView.game.setColor(CellColor.PURPLE);
-
-                    buttonGreen.setChecked(false);
-                    buttonBlue.setChecked(false);
-                } else buttonPurple.setChecked(true);
-            }
-        });
-
+                        for(final ColorButton otherBtn : colorButtons) {
+                            if(otherBtn.cellColor != btn.cellColor) {
+                                otherBtn.setChecked(false);
+                            }
+                        }
+                    } else btn.setChecked(true);
+                }
+            });
+        }
     }
 }
