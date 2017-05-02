@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Game {
@@ -25,10 +26,7 @@ public class Game {
     private Resources resources;
     private GameState state = GameState.START;
 
-    private Paint greenPaint;
-    private Paint bluePaint;
-    private Paint purplePaint;
-    private Paint blankPaint;
+    private HashMap<CellColor, Paint> paintMap;
 
     private int gridWidth = 24;
     private int gridHeight = 24;
@@ -62,14 +60,23 @@ public class Game {
             }
         }
 
-        greenPaint = new Paint();
+        paintMap = new HashMap<>();
+
+        Paint greenPaint = new Paint();
         greenPaint.setColor(resources.getColor(R.color.cellGreen));
-        bluePaint = new Paint();
+        paintMap.put(CellColor.GREEN, greenPaint);
+
+        Paint bluePaint = new Paint();
         bluePaint.setColor(resources.getColor(R.color.cellBlue));
-        purplePaint = new Paint();
+        paintMap.put(CellColor.BLUE, bluePaint);
+
+        Paint purplePaint = new Paint();
         purplePaint.setColor(resources.getColor(R.color.cellPurple));
-        blankPaint = new Paint();
+        paintMap.put(CellColor.PURPLE, purplePaint);
+
+        Paint blankPaint = new Paint();
         blankPaint.setColor(resources.getColor(R.color.colorButtonBorder));
+        paintMap.put(CellColor.BLANK, blankPaint);
 
         brushColor = CellColor.BLANK;
 
@@ -189,10 +196,7 @@ public class Game {
                     j * cellHeight,
                     i * cellWidth + cellWidth,
                     j * cellHeight + cellHeight,
-                    (grid[i][j] == CellColor.GREEN) ? greenPaint
-                        : (grid[i][j] == CellColor.BLUE) ? bluePaint
-                        : (grid[i][j] == CellColor.PURPLE) ? purplePaint
-                        : blankPaint
+                    paintMap.get(grid[i][j])
                 );
             }
         }
