@@ -201,13 +201,15 @@ public class Game {
     private void drawGame(Canvas canvas) {
         for(int j = 0; j < grid[0].length; j++) {
             for(int i = 0; i < grid.length; i++) {
-                canvas.drawRect(
-                    i * cellWidth,
-                    j * cellHeight,
-                    i * cellWidth + cellWidth,
-                    j * cellHeight + cellHeight,
-                    paintMap.get(grid[i][j])
-                );
+                if(grid[i][j] != null) {
+                    canvas.drawRect(
+                        i * cellWidth,
+                        j * cellHeight,
+                        i * cellWidth + cellWidth,
+                        j * cellHeight + cellHeight,
+                        paintMap.get(grid[i][j])
+                    );
+                }
             }
         }
     }
