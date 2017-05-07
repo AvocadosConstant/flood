@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorButtonBorder">#eeeeee</color>
+    <color name="cellOrange">#FF7500</color>
+    <color name="cellYellow">#FFE318</color>
     <color name="cellGreen">#BDDB39</color>
     <color name="cellBlue">#188A73</color>
     <color name="cellPurple">#00415A</color>

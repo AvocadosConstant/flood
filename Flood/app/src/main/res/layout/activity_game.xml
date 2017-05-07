@@ -50,6 +50,30 @@
             <ToggleButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/buttonOrange"
+                android:focusable="true"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/button_orange"/>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+            <ToggleButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/buttonYellow"
+                android:focusable="true"
+                android:textOn=""
+                android:textOff=""
+                android:background="@drawable/button_yellow"/>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+            <ToggleButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:id="@+id/buttonGreen"
                 android:focusable="true"
                 android:textOn=""

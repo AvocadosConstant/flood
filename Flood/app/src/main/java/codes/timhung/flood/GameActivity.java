@@ -29,6 +29,8 @@ public class GameActivity extends Activity {
         scoreText = (TextView)findViewById(R.id.highScoreText);
 
         colorButtons = new ColorButton[] {
+                new ColorButton((ToggleButton)findViewById(R.id.buttonOrange), CellColor.ORANGE),
+                new ColorButton((ToggleButton)findViewById(R.id.buttonYellow), CellColor.YELLOW),
                 new ColorButton((ToggleButton)findViewById(R.id.buttonGreen), CellColor.GREEN),
                 new ColorButton((ToggleButton)findViewById(R.id.buttonBlue), CellColor.BLUE),
                 new ColorButton((ToggleButton)findViewById(R.id.buttonPurple), CellColor.PURPLE)

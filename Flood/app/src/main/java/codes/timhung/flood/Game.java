@@ -28,8 +28,8 @@ public class Game {
 
     private HashMap<CellColor, Paint> paintMap;
 
-    private int gridWidth = 24;
-    private int gridHeight = 24;
+    private int gridWidth = 16;
+    private int gridHeight = 16;
     private int cellWidth;
     private int cellHeight;
     private CellColor grid[][];
@@ -45,22 +45,20 @@ public class Game {
         this.resources = resources;
 
         highScore = Integer.MAX_VALUE;
+        definePaints();
         restartGame();
     }
 
-    public void restartGame() {
-        Log.d("RESTARTGAME", "Restarting!");
-        cellWidth = screen.width() / gridWidth;
-        cellHeight = screen.height() / gridHeight;
-
-        grid = new CellColor[gridWidth][gridHeight];
-        for(int j = 0; j < grid[0].length; j++) {
-            for(int i = 0; i < grid.length; i++) {
-                grid[i][j] = CellColor.values()[(int)(Math.random() * (CellColor.values().length) - 1)];
-            }
-        }
-
+    public void definePaints() {
         paintMap = new HashMap<>();
+
+        Paint orangePaint = new Paint();
+        orangePaint.setColor(resources.getColor(R.color.cellOrange));
+        paintMap.put(CellColor.ORANGE, orangePaint);
+
+        Paint yellowPaint = new Paint();
+        yellowPaint.setColor(resources.getColor(R.color.cellYellow));
+        paintMap.put(CellColor.YELLOW, yellowPaint);
 
         Paint greenPaint = new Paint();
         greenPaint.setColor(resources.getColor(R.color.cellGreen));
@@ -77,6 +75,19 @@ public class Game {
         Paint blankPaint = new Paint();
         blankPaint.setColor(resources.getColor(R.color.colorButtonBorder));
         paintMap.put(CellColor.BLANK, blankPaint);
+    }
+
+    public void restartGame() {
+        Log.d("RESTARTGAME", "Restarting!");
+        cellWidth = screen.width() / gridWidth;
+        cellHeight = screen.height() / gridHeight;
+
+        grid = new CellColor[gridWidth][gridHeight];
+        for(int j = 0; j < grid[0].length; j++) {
+            for(int i = 0; i < grid.length; i++) {
+                grid[i][j] = CellColor.values()[(int)(Math.random() * (CellColor.values().length) - 1)];
+            }
+        }
 
         brushColor = CellColor.BLANK;
 
@@ -171,13 +182,12 @@ public class Game {
         if (canvas != null) {
             switch (state) {
                 case RUNNING:
-                    canvas.drawColor(Color.LTGRAY);
                     drawGame(canvas);
                     break;
                 case END:
-                    canvas.drawColor(Color.DKGRAY);
+                    //canvas.drawColor(Color.DKGRAY);
                 case START:
-                    canvas.drawColor(Color.BLACK);
+                    drawGame(canvas);
                     break;
             }
             holder.unlockCanvasAndPost(canvas);
